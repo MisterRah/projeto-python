@@ -1,6 +1,9 @@
 import psycopg2
 from psycopg2 import Error
 
+# Senha do banco de dados (alterar aqui para mudar em todas as conexões)
+DB_PASSWORD = "sua-senha"
+
 class Banco:
     def __init__(self):
         self.conn = None
@@ -12,7 +15,7 @@ class Banco:
             self.conn = psycopg2.connect(
                 database="alunos",
                 user="postgres",
-                password="teste12345",
+                password=DB_PASSWORD,
                 host="127.0.0.1",
                 port="5432"
             )
@@ -37,7 +40,7 @@ class Banco:
             self.conn = psycopg2.connect(
                 database="postgres",
                 user="postgres",
-                password="teste12345",
+                password=DB_PASSWORD,
                 host="127.0.0.1",
                 port="5432"
             )
