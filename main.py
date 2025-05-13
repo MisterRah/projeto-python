@@ -195,54 +195,65 @@ def buscar_alunos():
 
 # Interface
 janela = tk.Tk()
-janela.title("Cadastro de Alunos PostgreSQL")
+janela.title("Cadastro de Alunos")
+janela.geometry("800x600")  # Tamanho inicial
+janela.resizable(True, True)  # Permitir redimensionamento
 
-# Frame principal para organização
+# Configurar janela para expandir
+janela.grid_rowconfigure(0, weight=1)
+janela.grid_columnconfigure(0, weight=1)
+
+# Frame principal com pack para ocupar toda a janela
 frame_principal = tk.Frame(janela)
-frame_principal.grid(row=0, column=0, padx=10, pady=10)
+frame_principal.pack(fill="both", expand=True, padx=10, pady=10)
+
+# Configurar grid no frame_principal para ser responsivo
+frame_principal.grid_rowconfigure(11, weight=1)  # A linha da tabela expande
+frame_principal.grid_columnconfigure(0, weight=1)
+frame_principal.grid_columnconfigure(1, weight=1)
 
 # Labels e entradas
 tk.Label(frame_principal, text="Nome:").grid(row=0, column=0, sticky="w", padx=5, pady=5)
 entry_nome = tk.Entry(frame_principal, width=30)
-entry_nome.grid(row=0, column=1)
+entry_nome.grid(row=0, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="Turma:").grid(row=1, column=0, sticky="w", padx=5, pady=5)
 entry_turma = tk.Entry(frame_principal, width=30)
-entry_turma.grid(row=1, column=1)
+entry_turma.grid(row=1, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="Português (0 a 10):").grid(row=2, column=0, sticky="w", padx=5, pady=5)
 entry_portugues = tk.Entry(frame_principal, width=30)
-entry_portugues.grid(row=2, column=1)
+entry_portugues.grid(row=2, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="Matemática (0 a 10):").grid(row=3, column=0, sticky="w", padx=5, pady=5)
 entry_matematica = tk.Entry(frame_principal, width=30)
-entry_matematica.grid(row=3, column=1)
+entry_matematica.grid(row=3, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="Física (0 a 10):").grid(row=4, column=0, sticky="w", padx=5, pady=5)
 entry_fisica = tk.Entry(frame_principal, width=30)
-entry_fisica.grid(row=4, column=1)
+entry_fisica.grid(row=4, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="História (0 a 10):").grid(row=5, column=0, sticky="w", padx=5, pady=5)
 entry_historia = tk.Entry(frame_principal, width=30)
-entry_historia.grid(row=5, column=1)
+entry_historia.grid(row=5, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="Inglês (0 a 10):").grid(row=6, column=0, sticky="w", padx=5, pady=5)
 entry_ingles = tk.Entry(frame_principal, width=30)
-entry_ingles.grid(row=6, column=1)
+entry_ingles.grid(row=6, column=1, sticky="ew", padx=5)
 
 tk.Label(frame_principal, text="Geografia (0 a 10):").grid(row=7, column=0, sticky="w", padx=5, pady=5)
 entry_geografia = tk.Entry(frame_principal, width=30)
-entry_geografia.grid(row=7, column=1)
+entry_geografia.grid(row=7, column=1, sticky="ew", padx=5)
 
-# Botões
-tk.Button(frame_principal, text="Adicionar", command=adicionar_aluno, bg="#4CAF50", fg="white").grid(row=8, column=0, pady=10)
-tk.Button(frame_principal, text="Atualizar", command=atualizar_aluno, bg="#2196F3", fg="white").grid(row=8, column=1)
-tk.Button(frame_principal, text="Deletar", command=deletar_aluno, bg="#f44336", fg="white").grid(row=9, column=0)
-tk.Button(frame_principal, text="Limpar", command=limpar_campos, bg="#607D8B", fg="white").grid(row=9, column=1)
+# Botões com layout igual aos de "Buscar" e "Mostrar Todos", mantendo cores originais
+tk.Button(frame_principal, text="Adicionar", command=adicionar_aluno, bg="#4CAF50", fg="white").grid(row=8, column=0, padx=5, pady=10)
+tk.Button(frame_principal, text="Atualizar", command=atualizar_aluno, bg="#2196F3", fg="white").grid(row=8, column=1, padx=5, pady=10)
+tk.Button(frame_principal, text="Deletar", command=deletar_aluno, bg="#f44336", fg="white").grid(row=9, column=0, padx=5, pady=10)
+tk.Button(frame_principal, text="Limpar", command=limpar_campos, bg="#607D8B", fg="white").grid(row=9, column=1, padx=5, pady=10)
 
 # Frame para busca
 frame_busca = tk.Frame(frame_principal)
-frame_busca.grid(row=10, column=0, columnspan=2, pady=10)
+frame_busca.grid(row=10, column=0, columnspan=2, pady=10, sticky="ew")
 
 tk.Label(frame_busca, text="Buscar por Matrícula:").grid(row=0, column=0, sticky="w", padx=5)
 entry_busca_matricula = tk.Entry(frame_busca, width=15)
@@ -255,8 +266,23 @@ entry_busca_nome.grid(row=0, column=3, padx=5)
 tk.Button(frame_busca, text="Buscar", command=buscar_alunos, bg="#FFC107", fg="black").grid(row=0, column=4, padx=5)
 tk.Button(frame_busca, text="Mostrar Todos", command=atualizar_tabela, bg="#607D8B", fg="white").grid(row=0, column=5, padx=5)
 
+# Frame para a tabela com barra de rolagem
+frame_tabela = tk.Frame(frame_principal)
+frame_tabela.grid(row=11, column=0, columnspan=2, sticky="nsew", padx=5, pady=10)
+frame_tabela.grid_rowconfigure(0, weight=1)
+frame_tabela.grid_columnconfigure(0, weight=1)
+
+# Adicionar barra de rolagem vertical
+scrollbar = ttk.Scrollbar(frame_tabela, orient="vertical")
+scrollbar.grid(row=0, column=1, sticky="ns")
+
 # Tabela (Treeview)
-tabela = ttk.Treeview(frame_principal, columns=("matricula", "nome", "turma", "portugues", "matematica", "fisica", "historia", "ingles", "geografia"), show="headings")
+tabela = ttk.Treeview(
+    frame_tabela,
+    columns=("matricula", "nome", "turma", "portugues", "matematica", "fisica", "historia", "ingles", "geografia"),
+    show="headings",
+    yscrollcommand=scrollbar.set
+)
 tabela.heading("matricula", text="Matrícula")
 tabela.heading("nome", text="Nome")
 tabela.heading("turma", text="Turma")
@@ -267,19 +293,25 @@ tabela.heading("historia", text="História")
 tabela.heading("ingles", text="Inglês")
 tabela.heading("geografia", text="Geografia")
 
-# Ajustar largura
-tabela.column("matricula", width=70, anchor="center")
-tabela.column("nome", width=150, anchor="w")
-tabela.column("turma", width=80, anchor="center")
-tabela.column("portugues", width=70, anchor="center")
-tabela.column("matematica", width=70, anchor="center")
-tabela.column("fisica", width=70, anchor="center")
-tabela.column("historia", width=70, anchor="center")
-tabela.column("ingles", width=70, anchor="center")
-tabela.column("geografia", width=70, anchor="center")
+# Ajustar largura das colunas (proporcional)
+tabela.column("matricula", width=70, anchor="center", stretch=True)
+tabela.column("nome", width=150, anchor="w", stretch=True)
+tabela.column("turma", width=80, anchor="center", stretch=True)
+tabela.column("portugues", width=70, anchor="center", stretch=True)
+tabela.column("matematica", width=70, anchor="center", stretch=True)
+tabela.column("fisica", width=70, anchor="center", stretch=True)
+tabela.column("historia", width=70, anchor="center", stretch=True)
+tabela.column("ingles", width=70, anchor="center", stretch=True)
+tabela.column("geografia", width=70, anchor="center", stretch=True)
 
-tabela.grid(row=11, column=0, columnspan=2, padx=5, pady=10)
+tabela.grid(row=0, column=0, sticky="nsew")
+scrollbar.config(command=tabela.yview)
+
 tabela.bind("<<TreeviewSelect>>", selecionar_aluno)
+
+# Usado para alterar o estilo do ttk
+estilo = ttk.Style()
+estilo.theme_use("clam")
 
 # Inicializar tabela
 atualizar_tabela()
