@@ -48,7 +48,7 @@ faz essas quatro operações para realizar o cadastro de alunos. Além do mais, 
      ```
 
 2. **Mudanças no código para rodar em seu postgreSQL** 
-	- Entre no arquivo bd.py e procure a váriavel global chamada DB_PASSWORD e altere para sua senha do usuário postgres (usuário padrão do PostegreSQL):
+	- Entre no arquivo bd.py e procure a váriavel global chamada DB_PASSWORD e altere para sua senha do usuário postgres (usuário padrão do PostegreSQL)
 	
 		
 ## Uso
